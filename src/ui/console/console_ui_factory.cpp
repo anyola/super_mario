@@ -13,6 +13,9 @@ void ConsoleUIFactory::clear_data() {
 	full_boxes.clear();
 	ships.clear();
 	enemies.clear();
+	flying_enemies.clear();
+	jumping_enemies.clear();
+	moving_platforms.clear();
 	moneys.clear();
 }
 
@@ -35,6 +38,42 @@ void ConsoleUIFactory::create_enemy(
 	game->add_movable(enemy);
 	game->add_collisionable(enemy);
 	game_map->add_obj(enemy);
+}
+void ConsoleUIFactory::create_flying_enemy(
+	const Coord& top_left, const int width, const int height
+) {
+	ConsoleFlyingEnemy* enemy = new ConsoleFlyingEnemy(top_left, width, height);
+	flying_enemies.push_back(enemy);
+	game->add_map_movable(enemy);
+	game->add_movable(enemy);
+	game->add_collisionable(enemy);
+	game_map->add_obj(enemy);
+}
+
+void ConsoleUIFactory::create_jumping_enemy(
+	const Coord& top_left, const int width, const int height
+) {
+	ConsoleJumpingEnemy* enemy = new ConsoleJumpingEnemy(top_left, width, height);
+	jumping_enemies.push_back(enemy);
+	game->add_map_movable(enemy);
+	game->add_movable(enemy);
+	game->add_collisionable(enemy);
+	game_map->add_obj(enemy);
+}
+
+void ConsoleUIFactory::create_moving_platform(
+	const Coord& top_left, const int width, const int height,
+	const int patrol_range
+) {
+	ConsoleMovingPlatform* platform = new ConsoleMovingPlatform(
+		top_left, width, height, patrol_range
+	);
+	moving_platforms.push_back(platform);
+	game->add_map_movable(platform);
+	game->add_movable(platform);
+	game->add_collisionable(platform);
+	game->add_static_obj(platform);
+	game_map->add_obj(platform);
 }
 
 void ConsoleUIFactory::create_full_box(
