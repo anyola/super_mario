@@ -20,6 +20,18 @@ biv::Speed MovingPlatform::get_speed() const noexcept {
 	return {vspeed, hspeed};
 }
 
+void MovingPlatform::move_map_left() noexcept {
+	RectMapMovableAdapter::move_map_left();
+	min_x -= MapMovable::MAP_STEP;
+	max_x -= MapMovable::MAP_STEP;
+}
+
+void MovingPlatform::move_map_right() noexcept {
+	RectMapMovableAdapter::move_map_right();
+	min_x += MapMovable::MAP_STEP;
+	max_x += MapMovable::MAP_STEP;
+}
+
 void MovingPlatform::move_horizontally() noexcept {
 	top_left.x += hspeed;
 	if (top_left.x <= min_x || top_left.x >= max_x) {
@@ -43,5 +55,4 @@ void MovingPlatform::process_mario_collision(Collisionable* obj) noexcept {
 }
 
 void MovingPlatform::process_vertical_static_collision(Rect* obj) noexcept {
-
 }
